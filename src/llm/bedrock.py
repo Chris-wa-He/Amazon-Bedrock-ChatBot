@@ -27,7 +27,10 @@ class Boto3Bedrock:
             model_kwargs={"max_tokens_to_sample": 1000},
         )
 
-        self.memory = ConversationBufferMemory()
+        self.memory = ConversationBufferMemory(
+            # Anthropic requires the prefix to be "Assistant":
+            ai_prefix="Assistant"
+        )
         self.conversation = ConversationChain(
             llm=self.cl_llm, verbose=True, memory=self.memory
         )
